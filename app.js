@@ -10,6 +10,9 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 var config = require('./config.dev');
+var mongoose = require('mongoose');
+
+mongoose.connect(config.mongodb, { useNewUrlParser: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
