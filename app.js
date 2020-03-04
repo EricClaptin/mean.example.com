@@ -14,6 +14,8 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var Users = require('./models/users');
 
 mongoose.connect(config.mongodb, { useNewUrlParser: true });
 
@@ -46,6 +48,7 @@ app.use(require('express-session')({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+passport.use(Users.createStrategy());
 
 passport.serializeUser(function(user, done){
   done(null,{
