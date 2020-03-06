@@ -7,12 +7,7 @@ var concat = require('gulp-concat');
 var merge = require('merge-stream');
 var scss = require('gulp-sass');
 
-//Compile all JS tasks
-gulp.task('build-js', [
-  'build-main-js',
-  'build-auth-js',
-  'build-users-js'
-]);
+
 
 gulp.task('build-main-css', function(){
 
@@ -80,4 +75,5 @@ gulp.task('build-css', gulp.series('build-main-css'));
 gulp.task('build-js', gulp.series(
     'build-main-js',
     'build-auth-js',
+    'build-users-js'
   ));
