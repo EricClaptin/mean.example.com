@@ -116,6 +116,7 @@ app.use(function(req,res,next){
   //Redirect the user to the login screen.
   return res.redirect('/auth#login');
 });
+
 app.use('/auth', authRouter);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
