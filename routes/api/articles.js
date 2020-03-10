@@ -3,8 +3,6 @@ var router = express.Router();
 var Articles = require('../../models/articles');
 
 router.get('/', function(req, res, next) {});
-res.render('articles/index', { title: 'xxx' });
-
 
 router.get('/:articleId', function(req,res){});
 
