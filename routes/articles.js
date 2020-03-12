@@ -4,7 +4,7 @@ var Articles = require('../models/articles');
 var today = new Date();
 
 router.get('/app', function(req, res, next) {
-  res.render('articles/app', { title: 'Article Management' });
+  res.render('articles/app', { title: 'Article Editing' });
 });
 
 router.get('/', function(req, res, next) {
@@ -29,3 +29,5 @@ router.get('/view/:slug', function(req, res, next) {
     }
   });
 });
+
+module.exports = router;
