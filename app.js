@@ -5,11 +5,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var authRouter = require('./routes/auth');
+var articlesRouter = require('./routes/articles');
+
+var LocalStrategy = require('passport-local').Strategy;
+var Users = require('./models/users');
 var apiUsersRouter = require('./routes/api/users');
 var apiAuthRouter = require('./routes/api/auth');
-var authRouter = require('./routes/auth');
 var apiArticlesRouter = require('./routes/api/articles');
-var articlesRouter = require('./routes/articles');
 
 var app = express();
 
@@ -18,10 +21,6 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var Users = require('./models/users');
-
-mongoose.connect(config.mongodb, { useNewUrlParser: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -71,6 +70,18 @@ passport.deserializeUser(function(user, done){
 app.use(function(req,res,next){
   res.locals.session = req.session;
   next();
+
+});//Set up CORS
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  } else {
+    next();
+  }
 });
 
 app.use(function(req,res,next){
@@ -145,5 +156,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+mongoose.connect(config.mongodb, { useNewUrlParser: true });
 
 module.exports = app;
